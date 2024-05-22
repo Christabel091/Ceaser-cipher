@@ -1,0 +1,10 @@
+he Caesar cipher is a simple and historical encryption technique. Let me explain how it works:
+
+What is the Caesar Cipher?
+The Caesar Cipher is a substitution cipher, where each letter in the plaintext is replaced by a letter a certain number of positions down the alphabet. This shift is known as the key.
+For example, if the key is 3, then the letter ‘A’ would be replaced by ‘D’, ‘B’ by ‘E’, and so on1.
+How to Use the Caesar Cipher:
+Start with a plaintext message.
+Choose a key (the number of positions to shift each letter).
+Replace each letter in the plaintext with the letter that appears after shifting it by the key positions.
+Wrap around the alphabet if needed (e.g., ‘Z’ shifted by 1
