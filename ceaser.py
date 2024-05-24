@@ -10,10 +10,12 @@ def main():
     message=message.lower()
     cipher=generate_cipher(key)
     encode_msg=encode_message(message,cipher)
+    print("\nEncoded Message:")
+    display_message(encoded_message)
 
-    print("Encoded:",encode_msg)
     decode_msg=decode_message(encode_msg,cipher)
-    print("Decoded:",decode_msg)
+    print("\nDecoded Message:")
+    display_message(decoded_message)
 
 def get_key():
     while True:
@@ -44,4 +46,25 @@ def decode_message(encode_msg,cipher):
             decode_msg+=ALPHABET[cipher.index(chr)]
     return decode_msg
     
-main()
+def display_message(message):
+    radius = 10
+    n = len(message)
+    angle_step = 2 * math.pi / n
+    center_x = 20
+    center_y = 10
+    grid_size = 40
+    
+    # Create an empty grid
+    grid = [[' ' for _ in range(grid_size)] for _ in range(grid_size)]
+    
+    for i, char in enumerate(message):
+        angle = i * angle_step
+        x = int(center_x + radius * math.cos(angle))
+        y = int(center_y + radius * math.sin(angle))
+        grid[y][x] = char
+    
+    for row in grid:
+        print(''.join(row))
+
+if __name__ == "__main__":
+    main()
