@@ -1,19 +1,30 @@
 #Author: Christabel Obi-Nwosu
 #Date: Monday 27, 2023
-#File: ola9.py
 #Prgram to create a ceaser cipher to encode
 #and decode a message. 
 ALPHABET=list("abcdefghijklmnopqrstuvwxyz ")
 def main():
     message=input("Enter the message you want to encode: ")
-    key=int(input("Enter the key: "))
+    key = get_key()
     print("Encoding message","'"+message+"'","with key",key)
     message=message.lower()
     cipher=generate_cipher(key)
     encode_msg=encode_message(message,cipher)
+
     print("Encoded:",encode_msg)
     decode_msg=decode_message(encode_msg,cipher)
     print("Decoded:",decode_msg)
+
+def get_key():
+    while True:
+        try:
+            key = int(input("Enter the key (0-26): "))
+            if 0 <= key < len(ALPHABET):
+                return key
+            else:
+                print(f"Please enter a key between 0 and {len(ALPHABET) - 1}.")
+        except ValueError:
+            print("Invalid input. Please enter an integer.")
 
 def generate_cipher(key):
     cipher=ALPHABET[(len(ALPHABET)-key):]+ALPHABET[:(len(ALPHABET)-key)]
