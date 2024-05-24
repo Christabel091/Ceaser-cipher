@@ -1,21 +1,30 @@
-#Author: Christabel Obi-Nwosu
-#Date: Monday 27, 2023
-#Prgram to create a ceaser cipher to encode
-#and decode a message. 
-ALPHABET=list("abcdefghijklmnopqrstuvwxyz ")
-def main():
-    message=input("Enter the message you want to encode: ")
-    key = get_key()
-    print("Encoding message","'"+message+"'","with key",key)
-    message=message.lower()
-    cipher=generate_cipher(key)
-    encode_msg=encode_message(message,cipher)
-    print("\nEncoded Message:")
-    display_message(encoded_message)
+# Author: Christabel Obi-Nwosu
+# Date: Monday 27, 2023
+# Program to create a Caesar cipher to encode and decode a message.
 
-    decode_msg=decode_message(encode_msg,cipher)
-    print("\nDecoded Message:")
-    display_message(decoded_message)
+import math
+
+ALPHABET = list("abcdefghijklmnopqrstuvwxyz ")
+
+def main():
+    message = input("Enter the message you want to encode: ")
+    key = get_key()
+    print("Encoding message", "'" + message + "'", "with key", key)
+    message = message.lower()
+    cipher = generate_cipher(key)
+    encode_msg = encode_message(message, cipher)
+    
+    with open("output.txt", "w") as file:
+        file.write("\nEncoded Message:\n")
+        file.write(encode_msg + "\n")
+        file.write(display_message(encode_msg))
+        
+        decoded_message = decode_message(encode_msg, cipher)
+        file.write("\n\nDecoded Message:\n")
+        file.write(decoded_message + "\n")
+        file.write(display_message(decoded_message))
+    
+    print("Output has been written to output.txt")
 
 def get_key():
     while True:
@@ -29,23 +38,22 @@ def get_key():
             print("Invalid input. Please enter an integer.")
 
 def generate_cipher(key):
-    cipher=ALPHABET[(len(ALPHABET)-key):]+ALPHABET[:(len(ALPHABET)-key)]
-    return cipher
-    
-def encode_message(message,cipher):
-    encode_msg=''
-    for chr in message:
-        if chr in ALPHABET:
-            encode_msg+=cipher[ALPHABET.index(chr)]
-    return encode_msg
+    return ALPHABET[key:] + ALPHABET[:key]
 
-def decode_message(encode_msg,cipher):
-    decode_msg=''
-    for chr in encode_msg:
-        if chr in cipher:
-            decode_msg+=ALPHABET[cipher.index(chr)]
-    return decode_msg
-    
+def encode_message(message, cipher):
+    encoded_message = ''
+    for char in message:
+        if char in ALPHABET:
+            encoded_message += cipher[ALPHABET.index(char)]
+    return encoded_message
+
+def decode_message(encoded_message, cipher):
+    decoded_message = ''
+    for char in encoded_message:
+        if char in cipher:
+            decoded_message += ALPHABET[cipher.index(char)]
+    return decoded_message
+
 def display_message(message):
     radius = 10
     n = len(message)
@@ -63,8 +71,8 @@ def display_message(message):
         y = int(center_y + radius * math.sin(angle))
         grid[y][x] = char
     
-    for row in grid:
-        print(''.join(row))
+    output = "\n".join(''.join(row) for row in grid)
+    return output
 
 if __name__ == "__main__":
     main()
